@@ -1,0 +1,25 @@
+<!-- doctor_dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Dashboard</title>
+    <!-- Add your styling or link to CSS files -->
+</head>
+<body>
+    <h1>Welcome to the Doctor Dashboard, {{ user.username }}!</h1>
+    <p>Doctor Information:</p>
+    <ul>
+        <li><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</li>
+        <li><strong>Email:</strong> {{ user.email }}</li>
+        <li><strong>Address:</strong> {{ user.address_line1 }}</li>
+        <li><strong>City:</strong> {{ user.city }}</li>
+        <li><strong>State:</strong> {{ user.state }}</li>
+        <li><strong>Pincode:</strong> {{ user.pincode }}</li>
+        <button type="button" onclick="window.location.href='/create_blog_post'" class="window">Create New Blog</button>
+        <button type="button" onclick="window.location.href='/logout'" class="window">Logout</button>
+
+        <!-- Add more fields as needed -->
+    </ul>
+
+</body>
+</html>

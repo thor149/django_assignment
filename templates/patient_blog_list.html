@@ -1,0 +1,17 @@
+<!-- myapp/templates/blog/patient_blog_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Blog Posts</h2>
+  <div>
+    <form method="get" action="">
+      <label for="category">Filter by Category:</label>
+      <select name="category" id="category">
+        <option value="">All</option>
+        {% for category in categories %}
+          <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Filter</button>
+    </form>
+  </div>
