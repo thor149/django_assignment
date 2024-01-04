@@ -18,3 +18,15 @@ class BlogPostForm(forms.ModelForm):
         model = BlogPost
         fields = ['title', 'image', 'category', 'summary', 'content', 'draft']
         widgets = {'category': forms.Select(attrs={'readonly': 'readonly'})}
+
+
+class AppointmentBookingForm(forms.Form):
+    REQUIRED_SPECIALITY_CHOICES = [
+        ('Speciality 1', 'Speciality 1'),
+        ('Speciality 2', 'Speciality 2'),
+        # Add more speciality choices as needed
+    ]
+
+    required_speciality = forms.ChoiceField(choices=REQUIRED_SPECIALITY_CHOICES)
+    date_of_appointment = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    start_time_of_appointment = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))

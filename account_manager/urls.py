@@ -13,6 +13,8 @@ urlpatterns = [
     path('create_blog_post/', create_blog_post, name='create_blog_post'),
     path('blog_posts_list/', blog_posts_list, name='blog_posts_list'),
     path('logout/', user_logout,name='logout'),
+    path('doctors_list/', doctor_list, name='doctors_list'),
+    path('book-appointment/<str:doctor_username>/', book_appointment, name='book_appointment'),
 ]
 
 if settings.DEBUG:

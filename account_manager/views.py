@@ -1,11 +1,11 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, logout, login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from .models import *
-
+from datetime import datetime, time, timedelta
 
 @login_required
 def doctor_dashboard(request):
@@ -26,6 +26,51 @@ def patient_dashboard(request):
     context = {'patient_profile': patient_profile}
 
     return render(request, 'patient_dashboard.html', context)
+
+
+def doctor_list(request):
+    doctors = CustomUser.objects.filter(user_type='doctor')
+    context = {'doctors': doctors}
+    return render(request, 'doctors_list.html', context)
+
+
+def book_appointment(request, doctor_username):
+    # Retrieve the doctor based on the provided doctor_username
+    try:
+        doctor = CustomUser.objects.get(username=doctor_username, user_type='doctor')
+    except CustomUser.DoesNotExist:
+        # Handle the case where the doctor does not exist
+        return redirect('doctor_list')  # Redirect to the doctor list page with a message
+
+    if request.method == 'POST':
+        form = AppointmentBookingForm(request.POST)
+        if form.is_valid():
+            # Process the appointment booking here using form.cleaned_data
+            required_speciality = form.cleaned_data['required_speciality']
+            date_of_appointment = form.cleaned_data['date_of_appointment']
+            start_time_of_appointment = form.cleaned_data['start_time_of_appointment']
+            start_time = start_time_of_appointment
+            end_time = (datetime.combine(date_of_appointment, start_time) + timedelta(minutes=45)).time()
+
+            # Get the doctor's name from the selected doctor
+            doctor_name = doctor.first_name + ' ' + doctor.last_name
+
+            # Pass the data to the confirmation template
+            context = {
+                'form': form,
+                'doctor_name': doctor_name,
+                'date_of_appointment': date_of_appointment,
+                'start_time_of_appointment': start_time_of_appointment,
+                'end_time_of_appointment': end_time,
+            }
+
+            return render(request, 'confirmation_template.html', context)
+
+    else:
+        form = AppointmentBookingForm()
+    # Add your appointment booking logic here (e.g., creating a new appointment instance)
+
+    return render(request, 'book_appointment.html', {'form': form, 'doctor': doctor})
 
 
 def login_view(request):

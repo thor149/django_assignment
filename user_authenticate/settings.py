@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,7 +30,7 @@ AUTH_USER_MODEL = 'account_manager.CustomUser'
 ACCOUNT_FORMS = {
     'signup': 'account_manager.forms.SignUpForm',
 }
-
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.path.join(BASE_DIR, 'config', 'credentials.json')
 # Application definition
 
 INSTALLED_APPS = [

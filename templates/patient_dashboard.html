@@ -17,6 +17,7 @@
         <li><strong>Pincode:</strong> {{ user.pincode }}</li>
         <button type="button" onclick="window.location.href='/blog_posts_list'" class="window">Read Blogs</button>
         <button type="button" onclick="window.location.href='/logout'" class="window">Logout</button>
+        <button><a href="{% url 'doctors_list' %}">View List of Doctors</a></button>
     </ul>
 
 </body>
